@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import MenuItem from '../components/MenuItem';
 
 const Menu = () => {
     const { id } = useParams();
@@ -14,7 +16,10 @@ const Menu = () => {
     },[])
 
   return (
-    <div>{restaurantData.name}</div>
+    <div>
+        <Navbar />
+        <MenuItem restaurant={restaurantData}/>
+    </div>
   )
 }
 
