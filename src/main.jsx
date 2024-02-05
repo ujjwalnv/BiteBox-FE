@@ -5,6 +5,9 @@ import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Home from './pages/Home.jsx'
 import Menu from './pages/Menu.jsx'
+import Login from './pages/Login.jsx'
+import Register from './pages/Register.jsx'
+import { SnackbarProvider } from 'notistack'
 
 const router = createBrowserRouter([
     {
@@ -14,6 +17,14 @@ const router = createBrowserRouter([
     {
         element: <Menu />,
         path: "/restaurant/:id",
+    },
+    {
+        element: <Login />,
+        path: '/login'
+    },
+    {
+        element: <Register />,
+        path: '/register'
     }
 
 ]
@@ -21,6 +32,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <SnackbarProvider>
     <RouterProvider router={router} />
+    </SnackbarProvider>
   </React.StrictMode>,
 )
