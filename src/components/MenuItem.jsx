@@ -1,8 +1,10 @@
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const MenuItem = (props) => {
-  const { enqueueSnackbar } = useSnackbar()
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   const [ cartItems, setCartItems ] = useState(new Set());
 
   function addItem(item) {
@@ -21,6 +23,7 @@ const MenuItem = (props) => {
         localStorage.setItem("cart",JSON.stringify([...cartItems]));
         setCartItems(new Set());
         enqueueSnackbar("Added to Cart", { variant: "success" });
+        navigate('/cart')
     } catch (error) {
         enqueueSnackbar(res.message, { variant: "error" });
     }
@@ -50,7 +53,7 @@ const MenuItem = (props) => {
         
       ))}
       <button
-          className="w-full mt-2 bg-orange-300 border-solid border-2 border-black p-1"
+          className="mx-auto flex w-2/3 justify-center mt-2 bg-orange-300 border-solid border-2 border-black p-1"
           type='button'
           onClick={(e) => addToCart()}
         >
