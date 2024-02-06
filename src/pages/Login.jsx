@@ -21,7 +21,6 @@ const Login = () => {
 
     const res = await result.json();
     if(result.ok){
-        console.log(res.access_token);
         // Set access token in cookie
         Cookies.set('access_token', res.access_token, { expires: 7 });
         

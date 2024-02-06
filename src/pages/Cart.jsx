@@ -26,6 +26,16 @@ const Cart = () => {
         }
     }
 
+    function removeItems(){
+        try {
+            localStorage.removeItem("cart");
+            enqueueSnackbar("Cart is empty now", { variant: "success" });
+            navigate('/');
+        } catch (error) {
+            enqueueSnackbar(res.message, { variant: "error" });
+        }
+    }
+
     useEffect(() => {
         const cartData = JSON.parse(localStorage.getItem('cart'));
         setCartData(cartData);
@@ -34,13 +44,13 @@ const Cart = () => {
     <div>
         <Navbar />
         {cartData && <div className='className="flex flex-col mx-auto w-2/3 m-1 p-4'>
-            <div className="flex mx-auto text-2xl justify-center font-bold border-double border-2 border-black p-4">
+            <div className="flex mx-auto text-2xl mb-3 justify-center font-bold border-double border-2 border-black p-4">
                 Cart
             </div>
             {cartData.map((cartItem) => (
                 <div className="flex flex-row">
-                    <span className="flex text-2xl mt-5 ml-5 font-bold">{cartItem.name}</span>
-                    <span className='flex text-2xl ml-auto mr-5 mt-5 font-normal'>₹{cartItem.price}</span>
+                    <span className="flex text-2xl mt-1 ml-5 font-bold">{cartItem.name}</span>
+                    <span className='flex text-2xl ml-auto mr-5 mt-1 font-normal'>₹{cartItem.price}</span>
                 </div>
             ))}
             <div className="flex flex-row mt-2 border-solid border-t-2 border-black-500">
@@ -53,6 +63,13 @@ const Cart = () => {
                 onClick={(e) => order()}
             >
                 Order
+            </button>
+            <button
+                className="mx-auto flex w-full justify-center mt-2 bg-red-500 border-solid border-2 border-black p-1"
+                type='button'
+                onClick={(e) => removeItems()}
+            >
+                Remove all items
             </button>
         </div>}
         {!cartData && <div className='className="flex flex-col mx-auto w-2/3 m-1 p-4'>
