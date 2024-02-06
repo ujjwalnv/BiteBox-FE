@@ -6,8 +6,8 @@ const RestaurantCard = (props) => {
   return (
     <>
         {props.restaurants.map((restaurant) => (
-            <Link key={restaurant._id} to={`/restaurant/${restaurant._id}`}>
-                <div className="flex mx-auto w-2/3 grid-cols-2 m-1 p-2 shadow-md h-48 hover:scale-95">
+            <Link className="flex mx-auto w-2/3 m-1 p-2 shadow-md h-48 hover:scale-105" key={restaurant._id} to={`/restaurant/${restaurant._id}`}>
+                {/* <div > */}
                     <div className="flex aspect-square items-center">
                         <img className="w-full mx-auto" src={restaurant.image} />
                     </div>
@@ -21,7 +21,7 @@ const RestaurantCard = (props) => {
                         </div>
                         <p className='mt-4 font-extralight'>Lorem ipsum dolor sit amet</p>
                     </div>
-                </div>
+                {/* </div> */}
           </Link>
         ))}
     </>

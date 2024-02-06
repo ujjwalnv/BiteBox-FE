@@ -8,6 +8,7 @@ import Menu from './pages/Menu.jsx'
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import { SnackbarProvider } from 'notistack'
+import Cart from './pages/Cart.jsx'
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     {
         element: <Register />,
         path: '/register'
+    },
+    {
+        element: <Cart />,
+        path: '/cart'
     }
 
 ]
