@@ -5,19 +5,28 @@ import { Link, useNavigate } from 'react-router-dom'
 const Navbar = () => {
     const navigate = useNavigate();
 
-    function handleLogout(){
-        console.log("handleLogout");
-        fetch("http://localhost:8080/logout", {
-            method: "DELETE",
-            headers: {
-              Authorization: "Bearer" + Cookies.get("access_token"),
-              "x-auth-token": Cookies.get("access_token"),
-              "Content-Type": "application/json",
-            }
-        })
+    async function handleLogout(){
+        const access_token = Cookies.get("access_token");
+        const refresh_token = Cookies.get("refresh_token");
+        console.log(1111);
+        if(!access_token){
+            Cookies.remove("access_token");
+            Cookies.remove("refresh_token");
+            navigate('/login');
+        } 
+        else{
+            fetch("http://localhost:8080/logout", {
+                method: "DELETE",
+                headers: {
+                Authorization: `Bearer ${access_token}`,
+                "Content-Type": "application/json",
+                },
+                body: {token: refresh_token}
+            })
 
-        Cookies.remove("access_token");
-        navigate('login')
+            Cookies.remove("access_token");
+            navigate('/login')
+        }
     }
 
   return (

@@ -12,8 +12,7 @@ const Menu = () => {
         fetch(`http://localhost:8080/restaurant/${id}`, {
             method: "GET",
             headers: {
-              Authorization: "Bearer" + Cookies.get("access_token"),
-              "x-auth-token": Cookies.get("access_token"),
+              Authorization: "Bearer " + Cookies.get("access_token"),
               "Content-Type": "application/json",
             }
         })

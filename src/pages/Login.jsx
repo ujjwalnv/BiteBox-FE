@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import { useSnackbar } from 'notistack'
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const { enqueueSnackbar } = useSnackbar()
+    const { enqueueSnackbar } = useSnackbar();
+    const [ loggedIn, setLoggedIn ] = useState(false)
     const navigate = useNavigate();
+
+    async function isLoggedIn(){
+        
+        const access_token = Cookies.get('access_token');
+        if(!access_token) return false;
+    
+        await fetch('/verify-token', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            }
+        })
+        .then(response => {
+            if(response.ok){
+                setLoggedIn(true);
+            }
+        })
+        .catch((err) => false)
+    }
 
   async function handleOnSubmit(e) {
     e.preventDefault();
@@ -23,7 +43,7 @@ const Login = () => {
     if(result.ok){
         // Set access token in cookie
         Cookies.set('access_token', res.access_token, { expires: 7 });
-        
+        Cookies.set('refresh_token', res.refresh_token)
         // Redirect to homepage
         navigate('/');
 
@@ -33,6 +53,15 @@ const Login = () => {
         enqueueSnackbar(res.message, { variant: "error" });
     }
   }
+
+
+  useEffect(() => {
+    isLoggedIn();
+
+    if(loggedIn){
+        navigate('/')
+    };
+  }, [loggedIn])
 
   return (
     <div className="flex flex-col mx-auto w-1/3 m-1 p-4">
